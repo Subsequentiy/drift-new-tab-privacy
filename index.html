@@ -1,0 +1,362 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Drift New Tab 隐私政策 / Privacy Policy</title>
+<meta name="description" content="Drift New Tab 浏览器扩展的隐私政策：会发起哪些请求、在本地存了什么、你如何删除数据。">
+<style>
+  :root {
+    color-scheme: light dark;
+    --fg: #1b1d22;
+    --muted: #5b6070;
+    --bg: #ffffff;
+    --line: #e3e6ee;
+    --th: #f4f6fa;
+    --accent: #3b4c9c;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --fg: #e6e8ee;
+      --muted: #a2a8b8;
+      --bg: #14161c;
+      --line: #2b2f3a;
+      --th: #1d212a;
+      --accent: #9fb0ff;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    padding: 48px 20px 80px;
+    background: var(--bg);
+    color: var(--fg);
+    font: 16px/1.75 "Segoe UI", -apple-system, BlinkMacSystemFont, "Microsoft YaHei", "PingFang SC", sans-serif;
+  }
+  main { max-width: 820px; margin: 0 auto; }
+  h1 { font-size: 30px; line-height: 1.3; margin: 0 0 6px; letter-spacing: -.2px; }
+  h2 { font-size: 19px; margin: 40px 0 10px; padding-top: 18px; border-top: 1px solid var(--line); }
+  h3 { font-size: 16px; margin: 24px 0 6px; }
+  p, li { margin: 8px 0; }
+  ul, ol { padding-left: 22px; }
+  .meta { color: var(--muted); font-size: 14px; margin: 0 0 28px; }
+  .lede {
+    border-left: 3px solid var(--accent);
+    padding: 4px 0 4px 16px;
+    margin: 24px 0;
+    color: var(--fg);
+  }
+  .lede p { margin: 6px 0; }
+  table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 14.5px; }
+  th, td { text-align: left; vertical-align: top; padding: 9px 10px; border-bottom: 1px solid var(--line); }
+  th { background: var(--th); font-weight: 600; }
+  code {
+    font: 13.5px/1.5 ui-monospace, Consolas, "Courier New", monospace;
+    background: var(--th);
+    padding: 1px 5px;
+    border-radius: 4px;
+  }
+  a { color: var(--accent); }
+  .lang { font-size: 14px; color: var(--muted); margin-bottom: 22px; }
+  .lang a { margin-right: 14px; }
+  hr.big { border: 0; border-top: 1px solid var(--line); margin: 64px 0 8px; }
+  footer { color: var(--muted); font-size: 13.5px; margin-top: 56px; }
+  @media (max-width: 560px) {
+    body { padding: 32px 16px 64px; }
+    h1 { font-size: 24px; }
+    table { font-size: 13.5px; }
+  }
+</style>
+</head>
+<body>
+<main>
+
+<p class="lang"><a href="#zh">中文</a><a href="#en">English</a></p>
+
+<!-- ===================== 中文 ===================== -->
+<section id="zh" lang="zh-CN">
+
+<h1>Drift New Tab 隐私政策</h1>
+<p class="meta">最后更新：2026 年 11 月 11 日 · 适用于 Microsoft Edge 扩展 Drift New Tab</p>
+
+<div class="lede">
+  <p><strong>一句话：</strong>扩展不收集你的身份信息，不上传你的搜索历史，也没有自己的服务器。</p>
+  <p>它只向几个公开的第三方服务发起普通的只读网络请求（查天气、查空气质量、把城市名换成坐标、按 IP 粗略判断城市），以及在你打字时向<strong>当前选中的那个</strong>搜索引擎请求搜索联想词。所有设置、搜索历史和背景视频都只存在你自己的浏览器里。</p>
+</div>
+
+<h2>1. 扩展会发起哪些网络请求</h2>
+<p>全部是 HTTPS 的只读 GET 请求，不携带 Cookie，也不会缓存响应。扩展没有自己的服务器，也没有任何数据回传通道。</p>
+
+<table>
+  <thead>
+    <tr><th>服务</th><th>什么时候请求</th><th>发送了什么</th><th>用来做什么</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>ipwho.is</code></td>
+      <td>还没有手动选择城市、本地也没有缓存坐标时（通常是首次安装后）</td>
+      <td>不带参数；对方能看到发起请求的 IP 地址</td>
+      <td>粗略判断所在城市，用于显示天气</td>
+    </tr>
+    <tr>
+      <td><code>api.open-meteo.com</code></td>
+      <td>每次打开新标签页时；页面保持打开则每 15 分钟一次；点刷新时</td>
+      <td>经纬度坐标</td>
+      <td>天气实况、未来三天预报、15 分钟降水</td>
+    </tr>
+    <tr>
+      <td><code>air-quality-api.open-meteo.com</code></td>
+      <td>与上一行相同</td>
+      <td>经纬度坐标</td>
+      <td>空气质量（PM2.5、AQI）</td>
+    </tr>
+    <tr>
+      <td><code>geocoding-api.open-meteo.com</code></td>
+      <td>在天气面板里搜索城市时</td>
+      <td>你输入的城市名</td>
+      <td>把城市名换成经纬度</td>
+    </tr>
+    <tr>
+      <td><code>suggestqueries.google.com</code><br><code>api.bing.com</code></td>
+      <td>在搜索框里打字时（两者只会用到当前选中的那一个）</td>
+      <td>你正在输入的文字</td>
+      <td>搜索联想词</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>补充说明：</p>
+<ul>
+  <li>除「城市名」和「搜索框里正在输入的文字」之外，扩展不会向这些服务发送任何用户数据。</li>
+  <li>搜索框里输入的内容只会发给当前选中的搜索引擎，不会同时发给两个。</li>
+  <li>按回车真正发起搜索时，是浏览器正常跳转到搜索引擎网站，属于普通网页访问，不受本扩展控制，适用该搜索引擎自己的隐私政策。</li>
+  <li>这些服务都不需要账号，扩展也不持有任何 API 密钥。</li>
+</ul>
+
+<h2>2. 扩展在本地存了什么</h2>
+<p>以下数据全部保存在你自己的浏览器里，位于扩展的独立存储空间，其他网站无法访问，扩展也不会把它们上传到任何地方。</p>
+
+<h3>localStorage（小体积配置与缓存）</h3>
+<table>
+  <thead>
+    <tr><th>键名</th><th>内容</th><th>体积</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><code>vnt.look</code></td><td>外观设置（搜索框宽度、透明度、位置，天气透明度与模糊等）</td><td>约 100 字节</td></tr>
+    <tr><td><code>vnt.engine</code></td><td>当前使用的搜索引擎（谷歌 / 必应）</td><td>约 15 字节</td></tr>
+    <tr><td><code>vnt.weather</code></td><td>上次拉到的天气与空气质量数据</td><td>约 7 KB</td></tr>
+    <tr><td><code>vnt.weatherCity</code></td><td>你手动选择的城市</td><td>约 100 字节</td></tr>
+    <tr><td><code>vnt.videoMeta</code></td><td>你选过的视频的文件名和大小（不含内容）</td><td>约 80 字节</td></tr>
+    <tr><td><code>vnt.history</code></td><td>最近 60 条搜索关键词</td><td>最多约 3 KB</td></tr>
+  </tbody>
+</table>
+<p><code>vnt.history</code> 只在你真正发起一次搜索时记录该关键词，用于下次打开新标签页时给出「曾经搜过」的提示。它不记录你访问了哪些网页，也不记录搜索结果的任何内容。</p>
+
+<h3>IndexedDB（大体积文件）</h3>
+<table>
+  <thead>
+    <tr><th>数据库</th><th>内容</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><code>vnt-media</code></td><td>你自己选择的背景视频文件本体（上限 300 MB）</td></tr>
+  </tbody>
+</table>
+<p>这是你主动通过「选择视频」按钮指定的本地文件。如果你没选过，这里就是空的。</p>
+
+<h3>扩展没有存的东西</h3>
+<ul>
+  <li>不存浏览历史、书签、Cookie、密码、下载记录</li>
+  <li>不存任何账号标识、设备标识、遥测 ID</li>
+  <li>不含任何统计、埋点、广告 SDK</li>
+</ul>
+
+<h2>3. 关于 IP 地址</h2>
+<p>扩展本身不会记录、存储或发送你的 IP 地址。</p>
+<p>但当你打开新标签页、扩展向 <code>ipwho.is</code> 请求城市定位时，该服务在技术上会看到发起请求的 IP 地址（就像访问任何网站一样），并据此返回一个大致城市。这个城市的名称和经纬度会被存到本地，用于下次直接查天气。</p>
+<p>如果你不想暴露 IP，可以在天气面板里手动选择城市——一旦你手动选过，扩展就不再请求 <code>ipwho.is</code>（直到你点「改回自动定位」）。<code>ipwho.is</code> 的数据处理方式见其官网：<a href="https://ipwho.is" rel="noopener noreferrer">https://ipwho.is</a>。</p>
+
+<h2>4. 数据会不会被分享或出售</h2>
+<p>不会。扩展没有服务器，没有任何可以「分享」出去的通道。除了上面第 1 节列出的第三方天气/定位服务和你选中的搜索引擎之外，不会有任何组织收到你的数据。不存在出售、出租、交换用户数据的行为，也不会把数据用于与扩展功能无关的目的。</p>
+
+<h2>5. 第三方服务各自的隐私政策</h2>
+<ul>
+  <li>Open-Meteo（天气、空气质量、地理编码）：<a href="https://open-meteo.com/en/terms" rel="noopener noreferrer">https://open-meteo.com/en/terms</a></li>
+  <li>ipwho.is（IP 定位）：<a href="https://ipwho.is" rel="noopener noreferrer">https://ipwho.is</a></li>
+  <li>Google（搜索联想）：<a href="https://policies.google.com/privacy" rel="noopener noreferrer">https://policies.google.com/privacy</a></li>
+  <li>Microsoft / Bing（搜索联想）：<a href="https://privacy.microsoft.com/privacystatement" rel="noopener noreferrer">https://privacy.microsoft.com/privacystatement</a></li>
+</ul>
+
+<h2>6. 你的控制权</h2>
+<table>
+  <thead>
+    <tr><th>想删除什么</th><th>怎么做</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>搜索历史</td><td>点开搜索框 → 列表底部「清空搜索记录」；或高亮某条按 Delete 单条删除</td></tr>
+    <tr><td>已选的背景视频</td><td>右下角齿轮 →「背景视频」→「移除」</td></tr>
+    <tr><td>手动选的城市</td><td>天气面板 → 搜索城市 →「↩ 改回自动定位」</td></tr>
+    <tr><td>所有外观设置</td><td>齿轮面板 →「恢复默认」</td></tr>
+    <tr><td>全部本地数据</td><td>在 <code>edge://extensions</code> 移除扩展</td></tr>
+  </tbody>
+</table>
+<p>移除扩展会一并删除上面列出的所有本地数据（包括 IndexedDB 里的视频）。清除浏览器的「缓存和站点数据」<strong>不一定</strong>会删除扩展自己的存储，要彻底清除请移除扩展。</p>
+
+<h2>7. 儿童</h2>
+<p>扩展不面向 13 岁以下儿童，也不会主动收集任何年龄信息。</p>
+
+<h2>8. 变更</h2>
+<p>如果本政策有实质修改，会更新本页顶部的日期。由于扩展不含任何用户联系方式，建议在安装前确认本页内容。</p>
+
+<h2>9. 联系方式</h2>
+<p>如有疑问，请联系：<a href="mailto:2962974123@qq.com">2962974123@qq.com</a></p>
+
+</section>
+
+<hr class="big">
+
+<!-- ===================== English ===================== -->
+<section id="en" lang="en">
+
+<h1>Drift New Tab — Privacy Policy</h1>
+<p class="meta">Last updated: November 11, 2026 · Applies to the Drift New Tab extension for Microsoft Edge</p>
+
+<div class="lede">
+  <p><strong>In one sentence:</strong> the extension does not collect your identity, does not upload your search history, and has no server of its own.</p>
+  <p>It only makes ordinary read-only requests to a few public third-party services (weather, air quality, turning a city name into coordinates, and a rough IP-based city lookup), and — while you type — asks <strong>the currently selected</strong> search engine for suggestions. All settings, search history and background video stay in your own browser.</p>
+</div>
+
+<h2>1. Network requests the extension makes</h2>
+<p>All requests are read-only HTTPS GET requests. They do not carry cookies and are not cached. The extension has no server and no channel for sending data back.</p>
+
+<table>
+  <thead>
+    <tr><th>Service</th><th>When</th><th>What is sent</th><th>Purpose</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>ipwho.is</code></td>
+      <td>When no city has been chosen and no coordinates are cached (typically right after installation)</td>
+      <td>No parameters; the service sees the IP address that makes the request</td>
+      <td>Rough city lookup for the weather widget</td>
+    </tr>
+    <tr>
+      <td><code>api.open-meteo.com</code></td>
+      <td>Every time a new tab opens; every 15 minutes while a tab stays open; when you press refresh</td>
+      <td>Latitude and longitude</td>
+      <td>Current weather, 3-day forecast, 15-minute precipitation</td>
+    </tr>
+    <tr>
+      <td><code>air-quality-api.open-meteo.com</code></td>
+      <td>Same as above</td>
+      <td>Latitude and longitude</td>
+      <td>Air quality (PM2.5, AQI)</td>
+    </tr>
+    <tr>
+      <td><code>geocoding-api.open-meteo.com</code></td>
+      <td>When you search for a city in the weather panel</td>
+      <td>The city name you typed</td>
+      <td>Convert a city name into coordinates</td>
+    </tr>
+    <tr>
+      <td><code>suggestqueries.google.com</code><br><code>api.bing.com</code></td>
+      <td>While typing in the search box (only the currently selected engine is used)</td>
+      <td>The text you are typing</td>
+      <td>Search suggestions</td>
+    </tr>
+  </tbody>
+</table>
+
+<ul>
+  <li>Apart from the city name and the text being typed in the search box, the extension sends no user data to these services.</li>
+  <li>What you type goes only to the search engine you have selected, never to both.</li>
+  <li>Pressing Enter performs a normal browser navigation to the search engine's website. That is an ordinary web visit, not controlled by this extension, and covered by that engine's own privacy policy.</li>
+  <li>None of these services require an account, and the extension holds no API keys.</li>
+</ul>
+
+<h2>2. What is stored locally</h2>
+<p>Everything below is stored in your own browser, in the extension's isolated storage. Other websites cannot access it, and the extension never uploads it.</p>
+
+<h3>localStorage (small settings and cache)</h3>
+<table>
+  <thead>
+    <tr><th>Key</th><th>Content</th><th>Size</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><code>vnt.look</code></td><td>Appearance settings (search box width, opacity, position, weather panel opacity and blur)</td><td>~100 bytes</td></tr>
+    <tr><td><code>vnt.engine</code></td><td>The search engine in use (Google / Bing)</td><td>~15 bytes</td></tr>
+    <tr><td><code>vnt.weather</code></td><td>The last weather and air-quality response</td><td>~7 KB</td></tr>
+    <tr><td><code>vnt.weatherCity</code></td><td>The city you chose manually</td><td>~100 bytes</td></tr>
+    <tr><td><code>vnt.videoMeta</code></td><td>File name and size of your chosen video (not its content)</td><td>~80 bytes</td></tr>
+    <tr><td><code>vnt.history</code></td><td>Your last 60 search keywords</td><td>up to ~3 KB</td></tr>
+  </tbody>
+</table>
+<p><code>vnt.history</code> records a keyword only when you actually perform a search, so the next new tab can show "you searched for this before". It does not record which web pages you visited, nor any content of search results.</p>
+
+<h3>IndexedDB (large files)</h3>
+<table>
+  <thead>
+    <tr><th>Database</th><th>Content</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><code>vnt-media</code></td><td>The background video file you chose yourself (up to 300 MB)</td></tr>
+  </tbody>
+</table>
+<p>This is a local file you pick through the "Choose video" button. If you never picked one, this database is empty.</p>
+
+<h3>What the extension does not store</h3>
+<ul>
+  <li>No browsing history, bookmarks, cookies, passwords or download records</li>
+  <li>No account identifiers, device identifiers or telemetry IDs</li>
+  <li>No analytics, tracking or advertising SDKs</li>
+</ul>
+
+<h2>3. About IP addresses</h2>
+<p>The extension itself does not record, store or transmit your IP address.</p>
+<p>However, when a new tab requests a city from <code>ipwho.is</code>, that service will technically see the IP address making the request (just like visiting any website), and returns an approximate city. The city name and coordinates are then stored locally so future weather lookups can skip the lookup.</p>
+<p>If you would rather not expose your IP, choose a city manually in the weather panel. Once you do, the extension stops calling <code>ipwho.is</code> (until you choose "back to automatic location"). <code>ipwho.is</code>'s own data practices: <a href="https://ipwho.is" rel="noopener noreferrer">https://ipwho.is</a>.</p>
+
+<h2>4. Is data shared or sold?</h2>
+<p>No. The extension has no server, so there is no channel through which data could be shared. Apart from the third-party weather/location services listed in section 1 and the search engine you select, no organization receives your data. Data is not sold, rented or exchanged, and is not used for purposes unrelated to the extension's features.</p>
+
+<h2>5. Third-party privacy policies</h2>
+<ul>
+  <li>Open-Meteo (weather, air quality, geocoding): <a href="https://open-meteo.com/en/terms" rel="noopener noreferrer">https://open-meteo.com/en/terms</a></li>
+  <li>ipwho.is (IP geolocation): <a href="https://ipwho.is" rel="noopener noreferrer">https://ipwho.is</a></li>
+  <li>Google (search suggestions): <a href="https://policies.google.com/privacy" rel="noopener noreferrer">https://policies.google.com/privacy</a></li>
+  <li>Microsoft / Bing (search suggestions): <a href="https://privacy.microsoft.com/privacystatement" rel="noopener noreferrer">https://privacy.microsoft.com/privacystatement</a></li>
+</ul>
+
+<h2>6. Your controls</h2>
+<table>
+  <thead>
+    <tr><th>What to delete</th><th>How</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Search history</td><td>Open the search box → "Clear search history" at the bottom of the list, or highlight an entry and press Delete</td></tr>
+    <tr><td>Chosen background video</td><td>Gear button → "Background video" → "Remove"</td></tr>
+    <tr><td>Manually chosen city</td><td>Weather panel → search for a city → "↩ Back to automatic location"</td></tr>
+    <tr><td>All appearance settings</td><td>Gear panel → "Restore defaults"</td></tr>
+    <tr><td>All local data</td><td>Remove the extension at <code>edge://extensions</code></td></tr>
+  </tbody>
+</table>
+<p>Removing the extension deletes all of the local data listed above, including the video in IndexedDB. Clearing the browser's cache and site data does <strong>not reliably</strong> remove extension storage; remove the extension to erase it completely.</p>
+
+<h2>7. Children</h2>
+<p>The extension is not directed at children under 13 and does not knowingly collect any age information.</p>
+
+<h2>8. Changes</h2>
+<p>Any material change to this policy will be reflected in the date at the top of this page. Because the extension has no way to contact users directly, please review this page before installing.</p>
+
+<h2>9. Contact</h2>
+<p>Questions? Email <a href="mailto:2962974123@qq.com">2962974123@qq.com</a>.</p>
+
+</section>
+
+<footer>
+  <p>Drift New Tab · Privacy Policy · 2026-11-11</p>
+</footer>
+
+</main>
+</body>
+</html>

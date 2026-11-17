@@ -78,11 +78,11 @@
 <section id="zh" lang="zh-CN">
 
 <h1>Drift New Tab 隐私政策</h1>
-<p class="meta">最后更新：2026 年 11 月 11 日 · 适用于 Microsoft Edge 扩展 Drift New Tab</p>
+<p class="meta">最后更新：2026 年 11 月 17 日 · 适用于 Microsoft Edge 扩展 Drift New Tab</p>
 
 <div class="lede">
   <p><strong>一句话：</strong>扩展不收集你的身份信息，不上传你的搜索历史，也没有自己的服务器。</p>
-  <p>它只向几个公开的第三方服务发起普通的只读网络请求（查天气、查空气质量、把城市名换成坐标、按 IP 粗略判断城市），以及在你打字时向<strong>当前选中的那个</strong>搜索引擎请求搜索联想词。所有设置、搜索历史和背景视频都只存在你自己的浏览器里。</p>
+  <p>它只向几个公开的第三方服务发起普通的只读网络请求（查天气、查空气质量、把城市名换成坐标、按 IP 粗略判断城市），以及在你打字时向<strong>当前选中的那个</strong>搜索引擎请求搜索联想词。所有设置、搜索历史和背景文件（视频或图片）都只存在你自己的浏览器里。</p>
 </div>
 
 <h2>1. 扩展会发起哪些网络请求</h2>
@@ -147,7 +147,7 @@
     <tr><td><code>vnt.engine</code></td><td>当前使用的搜索引擎（谷歌 / 必应）</td><td>约 15 字节</td></tr>
     <tr><td><code>vnt.weather</code></td><td>上次拉到的天气与空气质量数据</td><td>约 7 KB</td></tr>
     <tr><td><code>vnt.weatherCity</code></td><td>你手动选择的城市</td><td>约 100 字节</td></tr>
-    <tr><td><code>vnt.videoMeta</code></td><td>你选过的视频的文件名和大小（不含内容）</td><td>约 80 字节</td></tr>
+    <tr><td><code>vnt.mediaMeta</code></td><td>你选过的背景文件的名称、大小和类型（不含内容）</td><td>约 80 字节</td></tr>
     <tr><td><code>vnt.history</code></td><td>最近 60 条搜索关键词</td><td>最多约 3 KB</td></tr>
   </tbody>
 </table>
@@ -159,10 +159,10 @@
     <tr><th>数据库</th><th>内容</th></tr>
   </thead>
   <tbody>
-    <tr><td><code>vnt-media</code></td><td>你自己选择的背景视频文件本体（上限 300 MB）</td></tr>
+    <tr><td><code>vnt-media</code></td><td>你自己选择的背景视频或图片本体（上限 300 MB）</td></tr>
   </tbody>
 </table>
-<p>这是你主动通过「选择视频」按钮指定的本地文件。如果你没选过，这里就是空的。</p>
+<p>这是你主动通过「选择图片/视频」按钮指定的本地文件。如果你没选过，这里就是空的。</p>
 
 <h3>扩展没有存的东西</h3>
 <ul>
@@ -179,7 +179,37 @@
 <h2>4. 数据会不会被分享或出售</h2>
 <p>不会。扩展没有服务器，没有任何可以「分享」出去的通道。除了上面第 1 节列出的第三方天气/定位服务和你选中的搜索引擎之外，不会有任何组织收到你的数据。不存在出售、出租、交换用户数据的行为，也不会把数据用于与扩展功能无关的目的。</p>
 
-<h2>5. 第三方服务各自的隐私政策</h2>
+<h2>5. 扩展申请了哪些权限</h2>
+<p>本扩展<strong>没有申请任何 <code>permissions</code></strong>——没有 <code>tabs</code>、没有 <code>storage</code>、没有 <code>bookmarks</code>、没有 <code>history</code>、也没有 <code>geolocation</code>。</p>
+<p>它只声明了 6 个 <code>host_permissions</code>，每一项都对应上面第 1 节里的一个请求：</p>
+<table>
+  <thead>
+    <tr><th>域名</th><th>用途</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><code>suggestqueries.google.com</code></td><td>取谷歌搜索联想词</td></tr>
+    <tr><td><code>api.bing.com</code></td><td>取必应搜索联想词</td></tr>
+    <tr><td><code>api.open-meteo.com</code></td><td>取天气实况与预报</td></tr>
+    <tr><td><code>air-quality-api.open-meteo.com</code></td><td>取空气质量</td></tr>
+    <tr><td><code>geocoding-api.open-meteo.com</code></td><td>把城市名换成经纬度</td></tr>
+    <tr><td><code>ipwho.is</code></td><td>按 IP 粗略判断城市</td></tr>
+  </tbody>
+</table>
+<p>为什么没有 <code>storage</code> 权限：设置和背景文件用的是浏览器自带的 localStorage 与 IndexedDB，这两者在扩展页面内无需声明 <code>storage</code> 权限即可使用。不申请它同样能满足功能，所以没有申请，以保持最小权限。</p>
+<p>为什么没有 <code>geolocation</code> 权限：扩展从不调用 <code>navigator.geolocation</code>，城市是通过上面第 1 节的 IP 定位接口得到的，精度只到城市级别，且可以随时改用手动选择。</p>
+<p>扩展也不申请任何可选权限，安装时不会弹出权限请求对话框。</p>
+
+<h2>6. 是否使用远程代码</h2>
+<p><strong>不使用。</strong>扩展没有从网络加载任何可执行代码。</p>
+<ul>
+  <li>全部 JavaScript 都在扩展包内的 <code>newtab.js</code> 里，随扩展一起签名分发</li>
+  <li>没有 <code>eval</code>、没有 <code>new Function</code>、没有动态插入的 <code>&lt;script&gt;</code></li>
+  <li>扩展页面不含内联脚本（MV3 的内容安全策略本身就禁止）</li>
+  <li>上面第 1 节列出的外部接口只返回 JSON 数据，不返回、也不会被执行任何代码</li>
+</ul>
+<p>因此本扩展不涉及「远程代码」相关的数据收集或安全风险。</p>
+
+<h2>7. 第三方服务各自的隐私政策</h2>
 <ul>
   <li>Open-Meteo（天气、空气质量、地理编码）：<a href="https://open-meteo.com/en/terms" rel="noopener noreferrer">https://open-meteo.com/en/terms</a></li>
   <li>ipwho.is（IP 定位）：<a href="https://ipwho.is" rel="noopener noreferrer">https://ipwho.is</a></li>
@@ -187,28 +217,28 @@
   <li>Microsoft / Bing（搜索联想）：<a href="https://privacy.microsoft.com/privacystatement" rel="noopener noreferrer">https://privacy.microsoft.com/privacystatement</a></li>
 </ul>
 
-<h2>6. 你的控制权</h2>
+<h2>8. 你的控制权</h2>
 <table>
   <thead>
     <tr><th>想删除什么</th><th>怎么做</th></tr>
   </thead>
   <tbody>
     <tr><td>搜索历史</td><td>点开搜索框 → 列表底部「清空搜索记录」；或高亮某条按 Delete 单条删除</td></tr>
-    <tr><td>已选的背景视频</td><td>右下角齿轮 →「背景视频」→「移除」</td></tr>
+    <tr><td>已选的背景文件</td><td>右下角齿轮 →「背景」→「移除」</td></tr>
     <tr><td>手动选的城市</td><td>天气面板 → 搜索城市 →「↩ 改回自动定位」</td></tr>
     <tr><td>所有外观设置</td><td>齿轮面板 →「恢复默认」</td></tr>
     <tr><td>全部本地数据</td><td>在 <code>edge://extensions</code> 移除扩展</td></tr>
   </tbody>
 </table>
-<p>移除扩展会一并删除上面列出的所有本地数据（包括 IndexedDB 里的视频）。清除浏览器的「缓存和站点数据」<strong>不一定</strong>会删除扩展自己的存储，要彻底清除请移除扩展。</p>
+<p>移除扩展会一并删除上面列出的所有本地数据（包括 IndexedDB 里的背景文件）。清除浏览器的「缓存和站点数据」<strong>不一定</strong>会删除扩展自己的存储，要彻底清除请移除扩展。</p>
 
-<h2>7. 儿童</h2>
+<h2>9. 儿童</h2>
 <p>扩展不面向 13 岁以下儿童，也不会主动收集任何年龄信息。</p>
 
-<h2>8. 变更</h2>
+<h2>10. 变更</h2>
 <p>如果本政策有实质修改，会更新本页顶部的日期。由于扩展不含任何用户联系方式，建议在安装前确认本页内容。</p>
 
-<h2>9. 联系方式</h2>
+<h2>11. 联系方式</h2>
 <p>如有疑问，请联系：<a href="mailto:2962974123@qq.com">2962974123@qq.com</a></p>
 
 </section>
@@ -219,11 +249,11 @@
 <section id="en" lang="en">
 
 <h1>Drift New Tab — Privacy Policy</h1>
-<p class="meta">Last updated: November 11, 2026 · Applies to the Drift New Tab extension for Microsoft Edge</p>
+<p class="meta">Last updated: November 17, 2026 · Applies to the Drift New Tab extension for Microsoft Edge</p>
 
 <div class="lede">
   <p><strong>In one sentence:</strong> the extension does not collect your identity, does not upload your search history, and has no server of its own.</p>
-  <p>It only makes ordinary read-only requests to a few public third-party services (weather, air quality, turning a city name into coordinates, and a rough IP-based city lookup), and — while you type — asks <strong>the currently selected</strong> search engine for suggestions. All settings, search history and background video stay in your own browser.</p>
+  <p>It only makes ordinary read-only requests to a few public third-party services (weather, air quality, turning a city name into coordinates, and a rough IP-based city lookup), and — while you type — asks <strong>the currently selected</strong> search engine for suggestions. All settings, search history and background files (video or image) stay in your own browser.</p>
 </div>
 
 <h2>1. Network requests the extension makes</h2>
@@ -287,7 +317,7 @@
     <tr><td><code>vnt.engine</code></td><td>The search engine in use (Google / Bing)</td><td>~15 bytes</td></tr>
     <tr><td><code>vnt.weather</code></td><td>The last weather and air-quality response</td><td>~7 KB</td></tr>
     <tr><td><code>vnt.weatherCity</code></td><td>The city you chose manually</td><td>~100 bytes</td></tr>
-    <tr><td><code>vnt.videoMeta</code></td><td>File name and size of your chosen video (not its content)</td><td>~80 bytes</td></tr>
+    <tr><td><code>vnt.mediaMeta</code></td><td>Name, size and type of your chosen background file (not its content)</td><td>~80 bytes</td></tr>
     <tr><td><code>vnt.history</code></td><td>Your last 60 search keywords</td><td>up to ~3 KB</td></tr>
   </tbody>
 </table>
@@ -299,10 +329,10 @@
     <tr><th>Database</th><th>Content</th></tr>
   </thead>
   <tbody>
-    <tr><td><code>vnt-media</code></td><td>The background video file you chose yourself (up to 300 MB)</td></tr>
+    <tr><td><code>vnt-media</code></td><td>The background video or image you chose yourself (up to 300 MB)</td></tr>
   </tbody>
 </table>
-<p>This is a local file you pick through the "Choose video" button. If you never picked one, this database is empty.</p>
+<p>This is a local file you pick through the "Choose image/video" button. If you never picked one, this database is empty.</p>
 
 <h3>What the extension does not store</h3>
 <ul>
@@ -319,7 +349,37 @@
 <h2>4. Is data shared or sold?</h2>
 <p>No. The extension has no server, so there is no channel through which data could be shared. Apart from the third-party weather/location services listed in section 1 and the search engine you select, no organization receives your data. Data is not sold, rented or exchanged, and is not used for purposes unrelated to the extension's features.</p>
 
-<h2>5. Third-party privacy policies</h2>
+<h2>5. Permissions the extension requests</h2>
+<p>The extension requests <strong>no <code>permissions</code> at all</strong> — no <code>tabs</code>, no <code>storage</code>, no <code>bookmarks</code>, no <code>history</code>, no <code>geolocation</code>.</p>
+<p>It declares only six <code>host_permissions</code>, each corresponding to one of the requests in section 1:</p>
+<table>
+  <thead>
+    <tr><th>Host</th><th>Purpose</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><code>suggestqueries.google.com</code></td><td>Google search suggestions</td></tr>
+    <tr><td><code>api.bing.com</code></td><td>Bing search suggestions</td></tr>
+    <tr><td><code>api.open-meteo.com</code></td><td>Current weather and forecast</td></tr>
+    <tr><td><code>air-quality-api.open-meteo.com</code></td><td>Air quality</td></tr>
+    <tr><td><code>geocoding-api.open-meteo.com</code></td><td>City name to coordinates</td></tr>
+    <tr><td><code>ipwho.is</code></td><td>Rough city lookup by IP</td></tr>
+  </tbody>
+</table>
+<p>Why there is no <code>storage</code> permission: settings and background files use the browser's own localStorage and IndexedDB, both of which are available on an extension page without declaring <code>storage</code>. Requesting it would add nothing, so it is not requested, keeping privileges minimal.</p>
+<p>Why there is no <code>geolocation</code> permission: the extension never calls <code>navigator.geolocation</code>. The city comes from the IP lookup described in section 1, is accurate only to city level, and can be replaced at any time by picking a city manually.</p>
+<p>No optional permissions are requested either, so installing never triggers a permission prompt.</p>
+
+<h2>6. Remote code</h2>
+<p><strong>None is used.</strong> The extension loads no executable code from the network.</p>
+<ul>
+  <li>All JavaScript lives in <code>newtab.js</code> inside the package, signed and shipped with the extension</li>
+  <li>No <code>eval</code>, no <code>new Function</code>, no dynamically inserted <code>&lt;script&gt;</code></li>
+  <li>The extension pages contain no inline scripts (Manifest V3's content security policy forbids them outright)</li>
+  <li>The external endpoints listed in section 1 return only JSON data; no code is returned or executed</li>
+</ul>
+<p>The extension therefore involves no remote-code data collection or related security risk.</p>
+
+<h2>7. Third-party privacy policies</h2>
 <ul>
   <li>Open-Meteo (weather, air quality, geocoding): <a href="https://open-meteo.com/en/terms" rel="noopener noreferrer">https://open-meteo.com/en/terms</a></li>
   <li>ipwho.is (IP geolocation): <a href="https://ipwho.is" rel="noopener noreferrer">https://ipwho.is</a></li>
@@ -327,34 +387,34 @@
   <li>Microsoft / Bing (search suggestions): <a href="https://privacy.microsoft.com/privacystatement" rel="noopener noreferrer">https://privacy.microsoft.com/privacystatement</a></li>
 </ul>
 
-<h2>6. Your controls</h2>
+<h2>8. Your controls</h2>
 <table>
   <thead>
     <tr><th>What to delete</th><th>How</th></tr>
   </thead>
   <tbody>
     <tr><td>Search history</td><td>Open the search box → "Clear search history" at the bottom of the list, or highlight an entry and press Delete</td></tr>
-    <tr><td>Chosen background video</td><td>Gear button → "Background video" → "Remove"</td></tr>
+    <tr><td>Chosen background file</td><td>Gear button → "Background" → "Remove"</td></tr>
     <tr><td>Manually chosen city</td><td>Weather panel → search for a city → "↩ Back to automatic location"</td></tr>
     <tr><td>All appearance settings</td><td>Gear panel → "Restore defaults"</td></tr>
     <tr><td>All local data</td><td>Remove the extension at <code>edge://extensions</code></td></tr>
   </tbody>
 </table>
-<p>Removing the extension deletes all of the local data listed above, including the video in IndexedDB. Clearing the browser's cache and site data does <strong>not reliably</strong> remove extension storage; remove the extension to erase it completely.</p>
+<p>Removing the extension deletes all of the local data listed above, including the background file in IndexedDB. Clearing the browser's cache and site data does <strong>not reliably</strong> remove extension storage; remove the extension to erase it completely.</p>
 
-<h2>7. Children</h2>
+<h2>9. Children</h2>
 <p>The extension is not directed at children under 13 and does not knowingly collect any age information.</p>
 
-<h2>8. Changes</h2>
+<h2>10. Changes</h2>
 <p>Any material change to this policy will be reflected in the date at the top of this page. Because the extension has no way to contact users directly, please review this page before installing.</p>
 
-<h2>9. Contact</h2>
+<h2>11. Contact</h2>
 <p>Questions? Email <a href="mailto:2962974123@qq.com">2962974123@qq.com</a>.</p>
 
 </section>
 
 <footer>
-  <p>Drift New Tab · Privacy Policy · 2026-11-11</p>
+  <p>Drift New Tab · Privacy Policy · 2026-11-17</p>
 </footer>
 
 </main>
